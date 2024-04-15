@@ -1,0 +1,116 @@
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+}
+
+.card-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Torna o contêiner ocupar toda a altura da tela */
+}
+
+.card {
+    width: 300px;
+    height: 200px;
+    margin: 20px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.card:hover {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.card h2 {
+    margin-top: 0;
+}
+
+.card p {
+    color: #666;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+}
+
+.cliente {
+    display: inline-block;
+    width: 300px;
+    padding: 20px;
+    margin: 20px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    text-align: left;
+    transition: all 0.3s ease;
+}
+
+.cliente:hover {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.cliente h3 {
+    margin-top: 0;
+}
+
+.cliente p {
+    margin: 5px 0;
+}
+
+.btn-voltar {
+    background-color: #ff0000;
+    color: #fff;
+    font-size: 18px;
+    padding: 15px 30px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.btn-voltar:hover {
+    background-color: #cc0000;
+}
+
+/* Adicione estas regras de estilo para o relatório */
+#relatorio {
+    font-family: Arial, sans-serif;
+    padding: 20px;
+}
+
+.cliente {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 20px;
+}
+
+.cliente h3 {
+    margin-top: 0;
+    font-size: 20px;
+    color: #333;
+}
+
+.cliente p {
+    margin: 5px 0;
+    color: #666;
+}
+
+.btn-download {
+    background-color: #4CAF50; /* Verde */
+    color: #fff;
+    font-size: 18px;
+    padding: 15px 30px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.btn-download:hover {
+    background-color: #45a049; /* Verde mais escuro ao passar o mouse */
+}

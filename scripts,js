@@ -1,0 +1,45 @@
+// Simulando uma base de dados de clientes
+let clientes = [];
+
+// Função para exibir a lista de clientes
+function exibirClientes() {
+    const listaClientes = document.getElementById("clientes-lista");
+    listaClientes.innerHTML = "<h2>Lista de Clientes</h2>";
+    
+    if (clientes.length === 0) {
+        listaClientes.innerHTML += "<p>Nenhum cliente cadastrado.</p>";
+    } else {
+        const lista = document.createElement("ul");
+        clientes.forEach(cliente => {
+            const item = document.createElement("li");
+            item.innerHTML = `<strong>${cliente.nome}</strong><br>
+                              Data de Entrada: ${cliente.dataEntrada}<br>
+                              Forma de Pagamento: ${cliente.formaPagamento}<br>
+                              Valor: ${cliente.valor}<br>
+                              Data de Encerramento: ${cliente.dataEncerramento}`;
+            lista.appendChild(item);
+        });
+        listaClientes.appendChild(lista);
+    }
+}
+
+// Função para cadastrar um cliente
+function cadastrarCliente(nome, dataEntrada, formaPagamento, valor, dataEncerramento) {
+    const cliente = { nome, dataEntrada, formaPagamento, valor, dataEncerramento };
+    clientes.push(cliente);
+    exibirClientes(); // Chama a função para exibir a lista atualizada após o cadastro
+}
+
+// Evento de submissão do formulário de cadastro
+document.getElementById("form-cadastro").addEventListener("submit", function(event) {
+    event.preventDefault();
+    const nome = document.getElementById("nome").value;
+    const dataEntrada = document.getElementById("data-entrada").value;
+    const formaPagamento = document.getElementById("forma-pagamento").value;
+    const valor = document.getElementById("valor").value;
+    const dataEncerramento = document.getElementById("data-encerramento").value;
+    cadastrarCliente(nome, dataEntrada, formaPagamento, valor, dataEncerramento);
+});
+
+// Exibir a lista de clientes ao carregar a página
+window.onload = exibirClientes;
