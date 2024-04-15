@@ -2,13 +2,18 @@ window.onload = function() {
     const listaClientes = document.getElementById("clientes-lista");
     listaClientes.innerHTML = "<h2>Clientes Cadastrados</h2>";
     
-    // Recupera os clientes da sessionStorage
-    let clientes = JSON.parse(sessionStorage.getItem('clientes')) || [];
+    // Recupera os clientes do localStorage
+    let clientes = JSON.parse(localStorage.getItem('clientes')) || [];
     
     // Verifica se há clientes cadastrados
     if (clientes.length === 0) {
         listaClientes.innerHTML += "<p>Nenhum cliente cadastrado ainda.</p>";
     } else {
+        // Ordena os clientes por data de entrada
+        clientes.sort(function(a, b) {
+            return new Date(a.dataEntrada) - new Date(b.dataEntrada);
+        });
+        
         // Exibe os clientes cadastrados
         clientes.forEach(function(cliente, index) {
             // Formata a data de entrada para DD/MM/AAAA
@@ -21,20 +26,13 @@ window.onload = function() {
                     <p><strong>RG:</strong> ${cliente.rg}</p>
                     <p><strong>Endereço:</strong> ${cliente.endereco}</p>
                     <p><strong>Data de Entrada:</strong> ${dataEntradaFormatada}</p>
-
                     <p><strong>Status:</strong> 
                         <select id="status-${index}" onchange="alterarStatus(${index}, this.value)">
                             <option value="em-andamento" ${cliente.status === 'em-andamento' ? 'selected' : ''}>Em Andamento</option>
                             <option value="concluído" ${cliente.status === 'concluído' ? 'selected' : ''}>Concluído</option>
                         </select>
                     </p>
-                    <p><strong>Renovva:</strong> 
-                        <select id="status-${index}" onchange="alterarStatus(${index}, this.value)">
-                            <option value="em-andamento" ${cliente.status === 'em-andamento' ? 'selected' : ''}>Em Andamento</option>
-                            <option value="concluído" ${cliente.status === 'concluído' ? 'selected' : ''}>Concluído</option>
-                        </select>
-                    </p>
-
+                    <p><strong>Renovva:</strong> ${cliente.renovvaValor}</p>
                     <p><strong>Forma de Pagamento:</strong> ${cliente.formaPagamento}</p>
                     <p><strong>Valor:</strong> R$ ${cliente.valor}</p>
                     <p><strong>Data de Conclusão:</strong> ${cliente.dataConclusao || 'Não concluído'}</p>
@@ -48,9 +46,8 @@ function formatarData(data) {
     return `${partesData[2]}/${partesData[1]}/${partesData[0]}`;
 }
 
-
 function alterarStatus(index, novoStatus) {
-    let clientes = JSON.parse(sessionStorage.getItem('clientes')) || [];
+    let clientes = JSON.parse(localStorage.getItem('clientes')) || [];
     if (novoStatus === 'concluído') {
         clientes[index].status = novoStatus;
         clientes[index].dataConclusao = new Date().toLocaleDateString(); // Adiciona a data de conclusão atual
@@ -58,12 +55,12 @@ function alterarStatus(index, novoStatus) {
         clientes[index].status = novoStatus;
         clientes[index].dataConclusao = null; // Remove a data de conclusão se o status não for "concluído"
     }
-    sessionStorage.setItem('clientes', JSON.stringify(clientes));
+    localStorage.setItem('clientes', JSON.stringify(clientes));
     location.reload(); // Recarrega a página para atualizar a lista de clientes
 }
 
 function downloadRelatorio() {
-    const clientes = JSON.parse(sessionStorage.getItem('clientes')) || [];
+    const clientes = JSON.parse(localStorage.getItem('clientes')) || [];
     let relatorio = "Relatório de Clientes Cadastrados:\n\n";
 
     clientes.forEach(function(cliente, index) {
@@ -74,7 +71,7 @@ function downloadRelatorio() {
         relatorio += `Endereço: ${cliente.endereco}\n`;
         relatorio += `Data de Entrada: ${cliente.dataEntrada}\n`;
         relatorio += `Status: ${cliente.status}\n`;
-        relatorio += `Renovva: ${cliente.status}\n`;
+        relatorio += `Renovva: ${cliente.renovvaValor}\n`;
         relatorio += `Forma de Pagamento: ${cliente.formaPagamento}\n`;
         relatorio += `Valor: R$ ${cliente.valor}\n`;
         if (cliente.status === 'concluído' && cliente.dataConclusao) {

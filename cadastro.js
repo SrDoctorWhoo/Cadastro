@@ -20,13 +20,14 @@ document.getElementById("cadastro-form").addEventListener("submit", function(eve
         renovvaValor,
         dataEntrada, 
         formaPagamento,
-        valor
+        valor,
+        status: 'em-andamento' // Define o status padrão como "Em Andamento"
     };
     
-    // Armazena o cliente na sessionStorage
-    let clientes = JSON.parse(sessionStorage.getItem('clientes')) || [];
+    // Armazena o cliente no localStorage
+    let clientes = JSON.parse(localStorage.getItem('clientes')) || [];
     clientes.push(cliente);
-    sessionStorage.setItem('clientes', JSON.stringify(clientes));
+    localStorage.setItem('clientes', JSON.stringify(clientes));
     
     // Redireciona para a página de lista de clientes
     window.location.href = "lista.html";
